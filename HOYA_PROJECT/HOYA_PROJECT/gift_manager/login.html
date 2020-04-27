@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>::GIFT MANAGER::</title>
+
+    <script src="../gift_manager/script/jquery.min.js"></script>
+    <script src="../gift_manager/script/jquery-1.9.1.min.js"></script>
+    <script src="../gift_manager/script/jquery-ui-1.10.1.custom.min.js"></script>
+    <script src="../gift_manager/script/bootstrap.min.js"></script>
+    <script src="../gift_manager/js/login.js"></script>
+    <script src="../gift_manager/js/global.js"></script>
+
+    <link href="../gift_manager/style/Bootstrap/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <main class="login-form">
+        <div class="cotainer">
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="card">
+                        <center><div class="card-header">OPTOTAL HOYA - LOGIN<br>GIFT MANAGER</div></center>
+                        <div class="card-body">
+                            <center><img src="images/logo_hoya.png" style="width:200px; height:100px;" /></center>
+                            <br>
+                            <input type='text' id='txtLogin' min='1' max='99' class='form-control' placeholder="LOGIN" />
+                            <br>
+                            <input type='password' id='txtSenha' min='1' max='99' class='form-control' placeholder="SENHA" />
+                            <br>
+                            <center><button class='btn btn-primary' onclick='CheckLogin();'>ENTRAR</button></center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div id="quickLaunchModal" tabindex="-1" role="dialog" class="modal fade" data-backdrop="static" data-keyboard="false" style='width:768px'></div>
+</body>
+</html>

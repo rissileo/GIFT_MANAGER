@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>::GIFT MANAGER::</title>
+
+    <script src="../gift_manager/script/jquery.min.js"></script>
+    <script src="../gift_manager/script/jquery-1.9.1.min.js"></script>
+    <script src="../gift_manager/script/jquery-ui-1.10.1.custom.min.js"></script>
+    <script src="../gift_manager/script/bootstrap.min.js"></script>
+    <script src="../gift_manager/js/pedido_material.js"></script>
+    <script src="../gift_manager/js/global.js"></script>
+
+    <link href="../gift_manager/style/Bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="style/select2.css" rel="stylesheet" />
+    <script src="script/select2.full.js"></script>
+
+</head>
+<body>
+    <main class="login-form">
+        <div class="cotainer">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">OPTOTAL HOYA - GIFT MANAGER <br>MONTAR PEDIDO</div>
+                        <div class="card-header"><span id="spLOGIN"></span><br><span id="spPEDIDO"></span></div>
+                        <div class="card-body">
+                            <div class="col-md-8">
+                                <button class='btn btn-primary' onclick='window.location.href = "login.html";'>LOGOUT</button>
+                                <button class='btn btn-primary' onclick='window.location.href = "pedidos.html";'>PEDIDO</button>
+                                <button class='btn btn-primary' onclick='CancelarPedido();'>CANCELAR PEDIDO</button>
+                                <button id="btnFinalizarPedido" class='btn btn-primary' onclick='FinalizarPedido();'>FINALIZAR PEDIDO</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-6">
+                                <input type='number' id='txtQuantidade' min='1' max='99' class='form-control' placeholder="QUANTIDADE" />
+                            </div>
+                            <br>
+                            <div class="col-md-6">
+                                <select id="sltrMaterial" class='form-control'></select>
+                            </div>
+                            <br>
+                            <div class="col-md-6">
+                                <div id="divIMAGE"></div>
+                            </div>
+                            <br>
+                            <div class="col-md-6">
+                                <button class='btn btn-primary' onclick='AdicionarMaterialPedido()'>ADD MATERIAL</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="tbPEDIDOMATERIAL"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div id="quickLaunchModal" tabindex="-1" role="dialog" class="modal fade" data-backdrop="static" data-keyboard="false" style='width:1024px'></div>
+</body>
+</html>
