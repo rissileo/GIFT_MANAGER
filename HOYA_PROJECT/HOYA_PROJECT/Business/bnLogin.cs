@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace HOYA_PROJECT.Business
@@ -10,14 +11,13 @@ namespace HOYA_PROJECT.Business
     {
         ReadXML xml = new ReadXML();
         dbConnect cn = new dbConnect();
+        StringBuilder sql = new StringBuilder();
 
         public string ValidaLogin(string sLogin, string sSenha)
         {
-            string sql = string.Empty;
+            sql.AppendFormat("EXEC SP_AUTENTICA_USUARIO @login = '{0}', @dc_senha = '{1}' ", sLogin.Trim(), sSenha.Trim());
 
-            sql = "EXEC SP_AUTENTICA_USUARIO @login = '"+ sLogin.Trim() + "', @dc_senha = '"+ sSenha + "' ";
-
-            return cn.DataTableToJSON(cn.SelectAccessDBSqlServer(sql));
+            return cn.DataTableToJSON(cn.SelectAccessDBSqlServer(sql.ToString()));
         }
     }
 }

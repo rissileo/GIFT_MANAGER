@@ -63,5 +63,12 @@ namespace HOYA_PROJECT.Helper
             //serializer.MaxJsonLength = Int32.MaxValue;
             return serializer.Serialize(list);
         }
+
+        private string ClearText(string value)
+        {
+            value = value.Replace("'", "`");
+            value = value.Replace("<", "");
+            return value;
+        }
     }
 }

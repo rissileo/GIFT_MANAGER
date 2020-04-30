@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace HOYA_PROJECT.Business
@@ -13,38 +14,35 @@ namespace HOYA_PROJECT.Business
         dbConnect cn = new dbConnect();
         SendMail sm = new SendMail();
         bnMaterial mat = new bnMaterial();
+        StringBuilder sql = new StringBuilder();
 
         public string InserePedido(int idCliente, int idLogin)
         {
-            string sql = string.Empty;
+            sql.AppendFormat("exec SP_PEDIDO @IDCLIENTE = {0}, @IDUSUARIO = {1};", idCliente, idLogin);
 
-            sql = "exec SP_PEDIDO @IDCLIENTE = " + idCliente + ", @IDUSUARIO = " + idLogin + ";";
-
-            return cn.DataTableToJSON(cn.SelectAccessDBSqlServer(sql));
+            return cn.DataTableToJSON(cn.SelectAccessDBSqlServer(sql.ToString()));
         }
 
         public string ListaPedidosEfetuados(int idLogin)
         {
-            string sql = string.Empty;
-
-            sql += "SELECT A.id_pedido, A.cod_pedido, CONVERT(VARCHAR(10), A.dt_insert, 103) AS datapedido, ";
-            sql += "B.razao_social, CASE WHEN COUNT(C.ID_PEDIDO_FINALIZADO) > 0 THEN 'SIM' ELSE 'NAO' END AS pedido_finalizado ";
-            sql += "FROM TB_PEDIDO A INNER JOIN TB_CLIENTE B ON A.ID_CLIENTE = B.ID_CLIENTE ";
-            sql += "LEFT JOIN TB_PEDIDO_FINALIZADO C ON C.ID_PEDIDO = A.ID_PEDIDO ";
-            sql += "WHERE A.id_user_insert = " + idLogin + "";
-            sql += "GROUP BY A.id_pedido, A.cod_pedido, CONVERT(VARCHAR(10), A.dt_insert, 103), B.razao_social ";
+            sql.Append("SELECT A.id_pedido, A.cod_pedido, CONVERT(VARCHAR(10), A.dt_insert, 103) AS datapedido, ");
+            sql.Append("B.razao_social, CASE WHEN COUNT(C.ID_PEDIDO_FINALIZADO) > 0 THEN 'SIM' ELSE 'NAO' END AS pedido_finalizado ");
+            sql.Append("FROM TB_PEDIDO A INNER JOIN TB_CLIENTE B ON A.ID_CLIENTE = B.ID_CLIENTE ");
+            sql.Append("LEFT JOIN TB_PEDIDO_FINALIZADO C ON C.ID_PEDIDO = A.ID_PEDIDO ");
+            sql.AppendFormat("WHERE A.id_user_insert = {0} ", idLogin);
+            sql.Append("GROUP BY A.id_pedido, A.cod_pedido, CONVERT(VARCHAR(10), A.dt_insert, 103), B.razao_social ");
             //sql += "order by A.dt_insert desc ";
 
-            return cn.DataTableToJSON(cn.SelectAccessDBSqlServer(sql));
+            return cn.DataTableToJSON(cn.SelectAccessDBSqlServer(sql.ToString()));
         }
 
         public bool FinalizarPedido(int idPedido)
         {
             DataTable dt = new DataTable();
 
-            string sql = "exec sp_finaliza_pedido @idpedido= " + idPedido + ";";
+            sql.AppendFormat("exec sp_finaliza_pedido @idpedido = {0};", idPedido);
 
-            dt = cn.SelectAccessDBSqlServer(sql);
+            dt = cn.SelectAccessDBSqlServer(sql.ToString());
 
             if (dt.Rows.Count > 0)
             {
@@ -92,12 +90,11 @@ namespace HOYA_PROJECT.Business
 
         public bool CancelarPedido(int idPedido)
         {
-            string sql = string.Empty;
             DataTable dt = new DataTable();
 
-            sql = "exec sp_cancela_pedido @idpedido = " + idPedido + ";";
+            sql.AppendFormat("exec sp_cancela_pedido @idpedido = {0};", idPedido);
 
-            dt = cn.SelectAccessDBSqlServer(sql);
+            dt = cn.SelectAccessDBSqlServer(sql.ToString());
 
             if (dt.Rows.Count > 0)
             {

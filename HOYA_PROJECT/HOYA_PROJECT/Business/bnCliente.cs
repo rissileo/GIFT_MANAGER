@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace HOYA_PROJECT.Business
@@ -11,22 +12,20 @@ namespace HOYA_PROJECT.Business
         ReadXML xml = new ReadXML();
         dbConnect cn = new dbConnect();
 
+        StringBuilder sql = new StringBuilder();
+
         public string ListaCliente()
         {
-            string sql = string.Empty;
+            sql.Append("SELECT * FROM TB_CLIENTE");
 
-            sql = "SELECT * FROM TB_CLIENTE";
-
-            return cn.DataTableToJSON(cn.SelectAccessDBSqlServer(sql));
+            return cn.DataTableToJSON(cn.SelectAccessDBSqlServer(sql.ToString()));
         }
 
         public string ProcuraCliente(string sChave)
         {
-            string sql = string.Empty;
+            sql.AppendFormat("SELECT * FROM TB_CLIENTE WHERE COD_CLIENTE LIKE '%{0}%' OR RAZAO_SOCIAL LIKE '%{0}%'", sChave.Trim());
 
-            sql = "SELECT * FROM TB_CLIENTE WHERE COD_CLIENTE LIKE '%"+ sChave + "%' OR RAZAO_SOCIAL LIKE '%"+ sChave + "%'";
-
-            return cn.DataTableToJSON(cn.SelectAccessDBSqlServer(sql));
+            return cn.DataTableToJSON(cn.SelectAccessDBSqlServer(sql.ToString()));
         }
     }
 }
